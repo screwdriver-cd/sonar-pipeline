@@ -5,7 +5,7 @@ jobs:
     main:
         requires: [~pr, ~commit]
         steps:
-            - echo: doing nothing here
+            - echo: echo doing nothing here
 
     # Deploy to beta environment and run tests
     beta:

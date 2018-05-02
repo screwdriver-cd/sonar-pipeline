@@ -1,4 +1,6 @@
 # sonar-pipeline
+ [![Build Status][status-image]][status-url] [![Open Issues][issues-image]][issues-url]![License][license-image] [![Slack][slack-image]][slack-url]
+
 Pipeline to deploy sonarqube server to kubernetes. Currently it only supports updating sonarqube's image. Other configuration requires manual update via helm.
 
 ## First Time Deployment
@@ -80,3 +82,17 @@ Be careful about running this command, it will wipe out everything for sonar eve
 helm del --purge beta
 helm del --purge beta
 ```
+
+## License
+
+Code licensed under the BSD 3-Clause license. See LICENSE file for terms.
+
+[license-image]: https://img.shields.io/npm/l/screwdriver-api.svg
+[issues-image]: https://img.shields.io/github/issues/screwdriver-cd/screwdriver.svg
+[issues-url]: https://github.com/screwdriver-cd/screwdriver/issues
+[status-image]: https://cd.screwdriver.cd/pipelines/704/badge
+[status-url]: https://cd.screwdriver.cd/pipelines/704
+[daviddm-image]: https://david-dm.org/screwdriver-cd/screwdriver.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/screwdriver-cd/screwdriver
+[slack-image]: http://slack.screwdriver.cd/badge.svg
+[slack-url]: http://slack.screwdriver.cd/
