@@ -2,7 +2,7 @@
 Pipeline to deploy sonarqube server to kubernetes. Currently it only supports updating sonarqube's image. Other configuration requires manual update via helm.
 
 ## First Time Deployment
-To simplify the deployment, we are using helm, the package manager for k8s, to bundle all we need for sonar and deploy them all in once. Example `values.yaml` can be found under `config-example` folder. The actual config files are stored somewhere else secretly.
+To simplify the deployment, we are using helm, the package manager for k8s, to bundle all we need for sonar and deploy them all at once. Example `values.yaml` can be found under `config-example` folder. The actual config files are stored somewhere else secretly.
 - Prerequisite:
     1. install helm client on your dev machine: `brew install kubernetes-helm`
     2. init helm in k8s cluster: https://docs.helm.sh/using_helm
@@ -57,7 +57,7 @@ To simplify the deployment, we are using helm, the package manager for k8s, to b
 - Manual update in sonar UI:
 
     For the following config, it's not configurable during boot time. Need to do it after sonar is up and running.
-  1. Go to **${your-sonar-host}** and log in as `admin` with default password `admin`.
+  1. Go to **${your-sonar-host}** and log in as `admin`.
   2. Go to **${your-sonar-host}/account/security**: change the default admin password
   3. Go to **${your-sonar-host}/admin/permissions**: unselect `Execute Analysis` and `Create Projects` for group `Anyone`
 
