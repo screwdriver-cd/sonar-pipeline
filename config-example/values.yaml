@@ -46,6 +46,7 @@ readinessProbe:
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 30
+  timeoutSeconds: 10
 
 # Set extra env variables. Like proxy settings.
 extraEnv: {}
