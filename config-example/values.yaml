@@ -88,14 +88,14 @@ plugins:
   # We allow the plugins init container to have a separate resources declaration because
   # the initContainer does not take as much resources.
 
-# A custom sonar.properties file can be provided using a multiline YAML string.
-sonarProperties: |
-  sonar.forceAuthentication=true
-  sonar.core.serverBaseURL=https://sonar.screwdriver.cd
-  sonar.auth.github.enabled=true
-  sonar.auth.github.clientId.secured=YOUR_CLIENT_ID
-  sonar.auth.github.clientSecret.secured=YOUR_CLIENT_SECRET
-  sonar.auth.github.organizations=screwdriver-cd
+# A custom sonar.properties file can be provided via dictionary.
+sonarProperties:
+  sonar.forceAuthentication: true
+  sonar.core.serverBaseURL: https://sonar.screwdriver.cd
+  sonar.auth.github.enabled: true
+  sonar.auth.github.clientId.secured: YOUR_CLIENT_ID
+  sonar.auth.github.clientSecret.secured: YOUR_CLIENT_SECRET
+  sonar.auth.github.organizations: screwdriver-cd
 
 ## Configuration values for the postgresql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
