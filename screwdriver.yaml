@@ -18,7 +18,7 @@ jobs:
             K8S_TAG: 6.7.3
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
-            K8S_HOST: api.ossd.k8s.screwdriver.cd
+            K8S_HOST: kubernetes
             K8S_DEPLOYMENT: beta-sonarqube
         secrets:
             # Talking to Kubernetes
@@ -35,7 +35,7 @@ jobs:
             K8S_TAG: 6.7.3
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
-            K8S_HOST: api.ossd.k8s.screwdriver.cd
+            K8S_HOST: kubernetes
             K8S_DEPLOYMENT: prod-sonarqube
         secrets:
             # Talking to Kubernetes
