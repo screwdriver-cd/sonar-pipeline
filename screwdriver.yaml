@@ -15,7 +15,7 @@ jobs:
             - deploy-k8s: ./ci/k8s-deploy.sh
             - test: sleep 300 && curl --silent --fail -o /dev/null https://beta.sonar.screwdriver.cd
         environment:
-            K8S_TAG: 8.4.1-commuity
+            K8S_TAG: 8.4.1-community
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
             K8S_HOST: kubernetes
@@ -32,7 +32,7 @@ jobs:
             - deploy-k8s: ./ci/k8s-deploy.sh
             - test: sleep 300 && curl --silent --fail -o /dev/null https://sonar.screwdriver.cd
         environment:
-            K8S_TAG: 8.4.1-commuity
+            K8S_TAG: 8.4.1-community
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
             K8S_HOST: kubernetes
