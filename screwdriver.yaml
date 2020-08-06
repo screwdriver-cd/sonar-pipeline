@@ -1,5 +1,5 @@
 shared:
-    image: node:8
+    image: node:12
 
 jobs:
     main:
@@ -13,9 +13,9 @@ jobs:
         steps:
             - setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
             - deploy-k8s: ./ci/k8s-deploy.sh
-            - test: sleep 120 && curl --silent --fail -o /dev/null https://beta-sonar.screwdriver.cd
+            - test: sleep 300 && curl --silent --fail -o /dev/null https://beta.sonar.screwdriver.cd
         environment:
-            K8S_TAG: 6.7.3
+            K8S_TAG: 8.4.1-commuity
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
             K8S_HOST: kubernetes
@@ -30,9 +30,9 @@ jobs:
         steps:
             - setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
             - deploy-k8s: ./ci/k8s-deploy.sh
-            - test: sleep 120 && curl --silent --fail -o /dev/null https://sonar.screwdriver.cd
+            - test: sleep 300 && curl --silent --fail -o /dev/null https://sonar.screwdriver.cd
         environment:
-            K8S_TAG: 6.7.3
+            K8S_TAG: 8.4.1-commuity
             K8S_CONTAINER: sonarqube
             K8S_IMAGE: sonarqube
             K8S_HOST: kubernetes
